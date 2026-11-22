@@ -16,7 +16,8 @@ class Store:
         }
 
     def module_names(self) -> list[str]:
-        return sorted(self._tables)
+        # 双下划线开头的是模块内部台账（如血缘方向证据/投递），不进业务模块清单。
+        return sorted(name for name in self._tables if not name.startswith("__"))
 
     def rows(self, module: str) -> list[dict[str, Any]]:
         return self._tables.setdefault(module, [])
